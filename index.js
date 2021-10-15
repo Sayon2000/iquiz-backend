@@ -16,20 +16,17 @@ app.use(cors())
 connectToDb()
 
 
-app.get('/', (req, res) => {
-    res.send("Hello World")
-})
 
 
 //Available routes
 
 app.use('/api/auth',require('./routes/auth'))
-// app.use('/api/questions',require('./routes/questions'))
+app.use('/api/questions',require('./routes/questions'))
 
 
 
 
 //Starting the server
 app.listen(port, () => {
-    console.log(`iNotebook backend app listening at http://localhost:${port}`)
+    console.log(`iQuiz backend app listening at http://localhost:${port}`)
   })

@@ -8,7 +8,7 @@ const fetchUser =(req,res,next)=>{
     if(!token)
         return res.status(400).send("Please use a valid token")
     const data = jwt.verify(token, process.env.JWT_SECRET)
-    console.log(data)
+    // console.log(data)
     req.id = data.id;
 
 

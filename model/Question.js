@@ -13,7 +13,9 @@ const questionSchema = new Schema({
     },
     options : {
         type : [String],
-        required : true
+        required : true,
+        minlength : 4,
+        maxlength : 4
     },
     answer:{
         type : String,
@@ -26,7 +28,11 @@ const questionSchema = new Schema({
     difficulty : {
         type : String,
         default : "low"
+    },
+    author : {
+        type : String,
+        required : true
     }
 })
 
-module.exports = mongoose.Mongoose.model('questions', questionSchema)
+module.exports = mongoose.model('questions', questionSchema)
