@@ -6,6 +6,7 @@ const fetchUser = require('../middleware/fetchUser')
 
 const { body, validationResult } = require('express-validator');
 const User = require('../model/User');
+const detailsValidator = require('../middleware/detailsValidator');
 
 
 //endpoints : 
@@ -146,6 +147,33 @@ router.get('/getdetails',fetchUser,async(req,res)=>{
 }
 
 } )
+
+
+//Route 4 : update name of user : /api/auth/update
  
+
+router.post('/update',fetchUser,detailsValidator,async(req,res)=>{
+    try{
+
+    
+    let success = false;
+    const id = req.id;
+    const {name , password} = req.body;
+
+    let user = await User.findByIdAndUpdate(id, {name , password})
+    console.log(user)
+
+    return res.json({success : "true", message :"Details updated"})
+    }
+    catch (error) {
+        console.log(error.message)
+        res.status(500).send("Internal server error ")
+}
+
+
+
+
+
+})
 
 module.exports = router

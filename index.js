@@ -22,6 +22,7 @@ connectToDb()
 
 app.use('/api/auth',require('./routes/auth'))
 app.use('/api/questions',require('./routes/questions'))
+app.use('/api/quiz',require('./routes/quiz'))
 
 
 
