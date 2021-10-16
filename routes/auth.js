@@ -158,12 +158,28 @@ router.post('/update',fetchUser,detailsValidator,async(req,res)=>{
     
     let success = false;
     const id = req.id;
-    const {name , password} = req.body;
+    let user = await User.findById(id)
+    if(!user)
+        return res.status(401).json({success , message : "User does not exist"})
+    const {name , password , cpassword} = req.body;
+    const compare = await bcrypt.compare(cpassword, user.password);
 
-    let user = await User.findByIdAndUpdate(id, {name , password})
+    console.log(compare)
+    if(!compare)
+        return res.status(400).json({success , message : "Enter correct password"})
+
+    const salt = bcrypt.genSaltSync(10);
+    const hashPass = bcrypt.hashSync(password, salt);
+
+
+
+
+    user = await User.findByIdAndUpdate(id, {name , hashPass} , {new  : true})
     console.log(user)
 
-    return res.json({success : "true", message :"Details updated"})
+    success = true
+
+    return res.json({success, message :"Details updated"})
     }
     catch (error) {
         console.log(error.message)

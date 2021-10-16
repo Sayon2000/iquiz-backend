@@ -29,6 +29,10 @@ const questionSchema = new Schema({
         type : String,
         default : "low"
     },
+    points:{
+        type : Number,
+        default : 10
+    },
     author : {
         type : String,
         required : true
