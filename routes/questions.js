@@ -18,6 +18,9 @@ router.post('/add',fetchUser ,questionValidator , async(req,res)=>{
     const { question, options, answer ,tag, difficulty} = req.body;
     // console.log(question , options , answer , tag , difficulty);
 
+    if(!options.include(answer))
+        return res.status(401).json({success , message : "Have the answer from the given options"})
+
 
     //checking if a similar question already exists
     let ques = await Question.findOne({question})

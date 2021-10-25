@@ -149,7 +149,7 @@ router.get('/getdetails',fetchUser,async(req,res)=>{
 } )
 
 
-//Route 4 : update name of user : /api/auth/update
+//Route 4 : update password of user : /api/auth/update
  
 
 router.post('/update',fetchUser,detailsValidator,async(req,res)=>{
@@ -161,7 +161,7 @@ router.post('/update',fetchUser,detailsValidator,async(req,res)=>{
     let user = await User.findById(id)
     if(!user)
         return res.status(401).json({success , message : "User does not exist"})
-    const {name , password , cpassword} = req.body;
+    const { password , cpassword} = req.body;
     const compare = await bcrypt.compare(cpassword, user.password);
 
     console.log(compare)
@@ -174,8 +174,7 @@ router.post('/update',fetchUser,detailsValidator,async(req,res)=>{
 
 
 
-    user = await User.findByIdAndUpdate(id, {name , hashPass} , {new  : true})
-    console.log(user)
+    user = await User.findByIdAndUpdate(id, {$set: {password : hashPass} }, {new  : true})
 
     success = true
 
